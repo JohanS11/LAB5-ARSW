@@ -11,6 +11,18 @@
         <link rel="stylesheet"
               href="/webjars/bootstrap/4.1.2/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
+        <script src="js/apidata.js"></script>
+        <script src="js/app.js"></script>
+        <style>
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-gap: 200px;
+                background-color: white;
+                padding: 10px;
+            }
+        </style>
+
 
 
 </head>
@@ -18,10 +30,8 @@
     <nav class="navbar navbar-light bg-light">
         <span class="navbar-brand mb-0 h1">BluePrints</span>
     </nav>
-cd
     </br>
-    </br>
-    </br>
+
     <div class="container-fluid">
         <div style="float: left">
                 <div class="form-row align-items-center">
@@ -30,49 +40,41 @@ cd
                         <input id="nameValue" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Author's Name">
                     </div>
                     <div class="col-auto">
-                        <button id="bttnSubmit" type="submit" class="btn btn-primary mb-2" onclick="findAuthor.search(nameValue.value)">get Blueprints! </button>
+                        <input id="bttnSubmit" type="button" class="btn btn-primary mb-2" onclick="services.funcione()" value = "get Blueprints!" > </input>
                     </div>
                 </div>
 
             </br>
-            <h3 id="authorLabel" class="display-4"></h3>
-            </br>
-            <form>
-                <div class="card" style="width: 18rem;">
-                    <div class="card-header">
-                        Table in a card
-                    </div>
-                    <table id="tablaBlueprints" class="card-table table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Blueprint name</th>
-                            <th scope="col">Number of points</th>
-                            <th scope="col" > Open </th>
+            <h3 id="authorLabel" class="display-6"></h3>
+            <div class="grid-container">
+                <div class="grid-item">
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Table in a card
+                        </div>
+                        <table class="card-table table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Blueprint name</th>
+                                <th scope="col">Number of points</th>
+                                <th scope="col" > Open </th>
+                            </tr>
+                            </thead>
+                            <tbody id = "bpTable"></tbody>
+                        </table>
+                    </div>
+                <h6 id="totalPoints" class="display-7"></h6>
+
                 </div>
 
+                <div class="grid-item">
+                    <h3 id="currentBlueprint" class="display-6"></h3>
+                    <canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;">
+                    </canvas>
 
-            </form>
-
+                </div>
+            </div>
 
         </div>
 
@@ -80,5 +82,4 @@ cd
 
 
 </body>
-<script src="js/app.js"></script>
 </html>
