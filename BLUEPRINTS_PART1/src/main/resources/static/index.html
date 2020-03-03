@@ -18,7 +18,7 @@
     <nav class="navbar navbar-light bg-light">
         <span class="navbar-brand mb-0 h1">BluePrints</span>
     </nav>
-
+cd
     </br>
     </br>
     </br>
@@ -30,7 +30,7 @@
                         <input id="nameValue" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Author's Name">
                     </div>
                     <div class="col-auto">
-                        <button id="bttnSubmit" type="submit" class="btn btn-primary mb-2">get Blueprints! </button>
+                        <button id="bttnSubmit" type="submit" class="btn btn-primary mb-2" onclick="findAuthor.search(nameValue.value)">get Blueprints! </button>
                     </div>
                 </div>
 
@@ -45,9 +45,10 @@
                     <table id="tablaBlueprints" class="card-table table">
                         <thead>
                         <tr>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Blueprint name</th>
+                            <th scope="col">Number of points</th>
+                            <th scope="col" > Open </th>
+
                         </tr>
                         </thead>
                         <tbody>
