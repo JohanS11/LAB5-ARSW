@@ -15,8 +15,67 @@
 
 </head>
 <body>
-    <input id= "nameValue" type="text" value=""><br>
-    <input id ="bttnSubmit" type="submit" value="getBlueprints!">
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">BluePrints</span>
+    </nav>
+
+    </br>
+    </br>
+    </br>
+    <div class="container-fluid">
+        <div style="float: left">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <label class="sr-only" for="inlineFormInput">Name</label>
+                        <input id="nameValue" type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Author's Name">
+                    </div>
+                    <div class="col-auto">
+                        <button id="bttnSubmit" type="submit" class="btn btn-primary mb-2">get Blueprints! </button>
+                    </div>
+                </div>
+
+            </br>
+            <h3 id="authorLabel" class="display-4"></h3>
+            </br>
+            <form>
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        Table in a card
+                    </div>
+                    <table id="tablaBlueprints" class="card-table table">
+                        <thead>
+                        <tr>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
 
 
 </body>
