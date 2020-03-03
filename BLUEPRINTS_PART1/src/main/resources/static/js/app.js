@@ -29,12 +29,15 @@ var services  = (function(){
     }
 
     function dibujar(blueprint){
-        $("#currentBlueprint").text("The current Blueprint is: " + blueprint.bpname)
+        console.log(blueprint);
+        $("#currentBlueprint").text("The current Blueprint is: " + blueprint.name)
         var can = document.getElementById("myCanvas");
         var lapiz = can.getContext("2d");
         lapiz.clearRect(0,0,can.width,can.height);
         lapiz.beginPath();
-        lapiz.moveTo(blueprint[0].x,blueprint[0].y);
+        var punto = blueprint.points[0];
+
+        lapiz.moveTo(punto.x,punto.y);
         blueprint.points.map(function(p){
             lapiz.lineTo(p.x,p.y)
             },1
@@ -53,34 +56,10 @@ var services  = (function(){
     }
     return {
         funcione:funcione,
-        searchAuthorByName:searchAuthorByName
+        searchAuthorByName:searchAuthorByName,
     }
 
 })();
-
-
-
-
-/*var findAuthor = (function() {
-
-   function doMap(blueprints){
-        return blueprints.map(function(x){
-            name: x.name,
-            points: x.points.length
-        })
-   }
-   function doTable(blueprints){
-        var author = blueprints[0].author;
-        blueprints = doMap(blueprints);
-
-        })
-   }
-   var search = function(author){
-        apidata.getBluePrintsByAuthor(author,doTable)
-   }
-
-})*/
-
 
 
 
