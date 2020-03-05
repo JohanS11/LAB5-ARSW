@@ -85,6 +85,43 @@ var services  = (function(){
               return {left: offsetLeft, top: offsetTop};
           }
 
+     var blueprintGet = function(){
+           var getPromise = $.get("http://localhost:8080/blueprints/"+selectedBlueprint.author);
+
+           getPromise.then(
+             function(data){
+               updateList(data)
+             },
+             function(){
+               document.getElementById("authorsNameLabel").innerHTML = selectedBp.author;
+               $("#blueprintTable tbody").empty();
+               document.getElementById("labelUserPoints").innerHTML = 0;
+               console.log('get failed')
+             }
+           );
+
+           return getPromise;
+         }
+
+         var blueprintDelete = function(){
+           var deletePromise = $.ajax({
+             url: "/blueprints/"+selectedBlueprint.author+"/"+selectedBlueprint.name,
+             type: 'DELETE',
+             contentType: "application/json"
+           });
+
+           deletePromise.then(
+             function(){
+               console.info('Delete OK');
+             },
+             function(){
+               console.info('Delete NOK');
+             }
+           );
+
+           return deletePromise;
+         }
+
     function funcione(){
         var aut = $("#nameValue").val();
         $("#authorLabel").text(aut+"'s blueprints:");
@@ -97,6 +134,7 @@ var services  = (function(){
     return {
         funcione:funcione,
         searchAuthorByName:searchAuthorByName,
+        blueprintDelete:blueprintDelete,
     }
 
 })();
