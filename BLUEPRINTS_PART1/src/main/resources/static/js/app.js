@@ -2,6 +2,7 @@ var services = (function () {
     var selectedBlueprint = "";
     var aut ="";
     var listaBlueprints="";
+    var lockCanvas=true;
 
     function doMap(blueprints) {
         return blueprints.map(function (bp) {
@@ -47,26 +48,31 @@ var services = (function () {
         selectedBlueprint = blueprint;
         if (window.PointerEvent) {
 
-            can.addEventListener("pointerdown", continueDraw, false);
+                can.addEventListener("pointerdown", continueDraw, false);
+
         } else {
             //Provide fallback for user agents that do not support Pointer Events
-            can.addEventListener("mousedown", continueDraw, false);
+
+                can.addEventListener("mousedown", continueDraw, false);
+
         }
     }
 
     function continueDraw(event) {
-        var canvas = document.getElementById('myCanvas');
-        var offset = getOffset(canvas);
-        if (canvas.getContext) {
-            var ctx = canvas.getContext("2d");
-            ctx.lineTo(ctx.pageX, ctx.pageY)
-            ctx.stroke();
-            ctx.fillStyle = '#ff0000';
-            ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 5, 5);
-            selectedBlueprint.points.push({x: event.pageX - offset.left, y: event.pageY - offset.top});
-            ctx.lineTo(event.pageX - offset.left, event.pageY - offset.top);
-            ctx.stroke();
-            console.log(selectedBlueprint)
+        if (!lockCanvas) {
+            var canvas = document.getElementById('myCanvas');
+            var offset = getOffset(canvas);
+            if (canvas.getContext) {
+                var ctx = canvas.getContext("2d");
+                ctx.lineTo(ctx.pageX, ctx.pageY)
+                ctx.stroke();
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(event.pageX - offset.left, event.pageY - offset.top, 5, 5);
+                selectedBlueprint.points.push({x: event.pageX - offset.left, y: event.pageY - offset.top});
+                ctx.lineTo(event.pageX - offset.left, event.pageY - offset.top);
+                ctx.stroke();
+                console.log(selectedBlueprint)
+            }
         }
 
     }
@@ -90,16 +96,20 @@ var services = (function () {
 
         getPromise.then(
             function () {
-                apidata.getBlueprintsByAuthor(aut, llenaTabla)
+                apidata.getBlueprintsByAuthor(aut, llenaTabla);
+                lockCanvas=false;
             },
             function () {
                 $("#bpTable").empty();
                 $("#totalPoints").text("la suma de puntos da 0");
-                console.log('get failed')
+                console.log('get failed');
+                lockCanvas=true;
+                clearCanvas();
             }
         );
         return getPromise;
     }
+
 
     var blueprintPut = function (){
         var putPromise = $.ajax({
@@ -131,7 +141,12 @@ var services = (function () {
 
         deletePromise.then(
             function () {
+
                 blueprintGet();
+                selectedBlueprint="";
+                $("#currentBlueprint").text("The current blueprint is:")
+                clearCanvas();
+
             },
             function () {
                 console.info('Delete NOK');
@@ -148,6 +163,14 @@ var services = (function () {
     function searchAuthorByName(name, author) {
 
         selectedBlueprint = apidata.getBlueprintsByNameAndAuthor(name, author, dibujar)
+        lockCanvas=false;
+    }
+
+    function clearCanvas() {
+        var myCanvas = document.getElementById("myCanvas");
+        var ctx = myCanvas.getContext("2d");
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        lockCanvas=true;
     }
 
     return {
