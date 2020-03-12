@@ -1,4 +1,4 @@
-var apidata = (function () {
+apiclient = (function () {
 
     return {
         getBlueprintsByAuthor: function(author, callback) {

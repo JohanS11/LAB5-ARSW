@@ -1,4 +1,5 @@
 var services = (function () {
+    var api = apiclient;
     var selectedBlueprint = "";
     var aut ="";
     var listaBlueprints="";
@@ -91,12 +92,35 @@ var services = (function () {
         return {left: offsetLeft, top: offsetTop};
     }
 
+    createBlueprint= function(){
+        clearCanvas()
+        selectedBlueprint = {
+            author: null,
+            name: null,
+            points: []
+        }
+        selectedBlueprint.author = document.getElementById("nameValue").value;
+        if(aut == null || aut == ""){
+            alert('Primero Busca un autor para agregarle el blueprint');
+        }
+        else{
+
+            selectedBlueprint.name = prompt('Nombre del blueprint: \n tu blueprint se iniciará en x,y = (0,0)');
+            selectedBlueprint.points = [{x:0,y:0}];
+        }
+        blueprintPost().then(blueprintGet).then(function(){
+            document.getElementById("currentBlueprint").innerHTML = "Selecciona un blueprint para Dibujar!!";
+            lockCanvas=true;
+        });
+
+    }
+
     var blueprintGet = function () {
         var getPromise = $.get("http://localhost:8080/blueprints/" + selectedBlueprint.author);
 
         getPromise.then(
             function () {
-                apidata.getBlueprintsByAuthor(aut, llenaTabla);
+                api.getBlueprintsByAuthor(aut, llenaTabla);
                 lockCanvas=false;
             },
             function () {
@@ -154,15 +178,46 @@ var services = (function () {
         );
     }
 
+    var blueprintPost = function(){
+        var postPromise = $.ajax({
+            url: "/blueprints",
+            type: 'POST',
+            data: JSON.stringify(selectedBlueprint),
+            contentType: "application/json"
+        });
+
+        postPromise.then(
+            function(){
+                console.info('OK');
+            },
+            function(){
+                console.info('NOK');
+            }
+        );
+
+        return postPromise;
+    }
+
     function funcione() {
         aut = $("#nameValue").val();
         $("#authorLabel").text(aut + "'s blueprints:");
-        listaBlueprints = apidata.getBlueprintsByAuthor(aut, llenaTabla)
+        if (aut==""| aut== null){
+            alert("Ingrese un dato valido");
+            $("#bpTable").empty();
+            $("#totalPoints").text("la suma de puntos da 0");
+            console.log('get failed');
+            lockCanvas=true;
+            clearCanvas();
+        }
+        else {
+            listaBlueprints = api.getBlueprintsByAuthor(aut, llenaTabla);
+        }
+
     }
 
     function searchAuthorByName(name, author) {
 
-        selectedBlueprint = apidata.getBlueprintsByNameAndAuthor(name, author, dibujar)
+        selectedBlueprint = api.getBlueprintsByNameAndAuthor(name, author, dibujar)
         lockCanvas=false;
     }
 
@@ -178,6 +233,7 @@ var services = (function () {
         searchAuthorByName: searchAuthorByName,
         blueprintDelete: blueprintDelete,
         blueprintPut:blueprintPut,
+        createBlueprint:createBlueprint,
     }
 
 })();

@@ -11,7 +11,7 @@
         <link rel="stylesheet"
               href="/webjars/bootstrap/4.1.2/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
-        <script src="js/apidata.js"></script>
+        <script src="js/apiclient.js"></script>
         <script src="js/app.js"></script>
         <style>
             .grid-container {
@@ -69,8 +69,9 @@
                 </div>
 
                 <div class="grid-item">
+                    <button type="button" class="btn btn-warning btn-lg btn-block" onclick="services.createBlueprint()">New Blueprint</button>
                     <h3 id="currentBlueprint" class="display-6"></h3>
-                    <canvas id="myCanvas" width="1100" height="700" style="border:1px solid #000000;">
+                    <canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;">
                     </canvas>
 
                         <button type="button" class="btn btn-success btn-lg btn-block" onclick="services.blueprintPut()">Save/Update</button>
