@@ -1,5 +1,7 @@
 var services = (function () {
     var selectedBlueprint = "";
+    var aut ="";
+    var listaBlueprints="";
 
     function doMap(blueprints) {
         return blueprints.map(function (bp) {
@@ -87,18 +89,15 @@ var services = (function () {
         var getPromise = $.get("http://localhost:8080/blueprints/" + selectedBlueprint.author);
 
         getPromise.then(
-            function (data) {
-
-                llenaTabla(data)
+            function () {
+                apidata.getBlueprintsByAuthor(aut, llenaTabla)
             },
             function () {
-                document.getElementById("authorsNameLabel").innerHTML = selectedBp.author;
-                $("#blueprintTable tbody").empty();
-                document.getElementById("labelUserPoints").innerHTML = 0;
+                $("#bpTable").empty();
+                $("#totalPoints").text("la suma de puntos da 0");
                 console.log('get failed')
             }
         );
-
         return getPromise;
     }
 
@@ -132,20 +131,18 @@ var services = (function () {
 
         deletePromise.then(
             function () {
-                console.info('Delete OK');
+                blueprintGet();
             },
             function () {
                 console.info('Delete NOK');
             }
         );
-
-        return deletePromise;
     }
 
     function funcione() {
-        var aut = $("#nameValue").val();
+        aut = $("#nameValue").val();
         $("#authorLabel").text(aut + "'s blueprints:");
-        apidata.getBlueprintsByAuthor(aut, llenaTabla)
+        listaBlueprints = apidata.getBlueprintsByAuthor(aut, llenaTabla)
     }
 
     function searchAuthorByName(name, author) {
